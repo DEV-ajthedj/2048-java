@@ -1,56 +1,43 @@
 import java.util.Random;
-import java.util.Scanner;
 
 public class Game {
     private final int[][] board = new int[4][4];
     private final Random rand = new Random();
-    private final Scanner scanner = new Scanner(System.in);
-
 
     public Game() {
-        System.out.println("Welcome to 2048!\n");
-    }
-
-    public void main() {
-        addRandomTiles(8);
-        while (true) {
-            printBoard();
-            System.out.print("> ");
-            String input = scanner.nextLine();
-            switch (input) {
-                case "w" -> moveUp();
-                case "s" -> moveDown();
-                case "d" -> moveRight();
-                case "a" -> moveLeft();
-            }
-            addRandomTiles(1);
-        }
+        addRandomTiles(2, 10);
     }
 
     public int[][] getBoard() {
         return board;
     }
 
-    public void printBoard() {
-        for (int[] row : board) {
-            for (int tile : row) {
-                System.out.print(tile + "\t");
-            }
-            System.out.println();
-        }
-        System.out.println();
-    }
-
-    public void addRandomTiles(int count) {
+    public final boolean addRandomTiles(int count, int attempts) {
         for (int i = 0; i < count; i++) {
             int row = rand.nextInt(4);
             int col = rand.nextInt(4);
             if (board[row][col] == 0) {
                 board[row][col] = 2;
             } else {
-                addRandomTiles(1);
+                if (attempts > 0) {
+                    return addRandomTiles(1, attempts - 1);
+                } else {
+                    return false;
+                }
             }
         }
+        return true;
+    }
+
+    public boolean canMove() {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (board[i][j] == 0) return true;
+                if (i < 3 && board[i][j] == board[i + 1][j]) return true;
+                if (j < 3 && board[i][j] == board[i][j + 1]) return true;
+            }
+        }
+        return false;
     }
 
     public void moveRight() {

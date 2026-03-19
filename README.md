@@ -4,7 +4,7 @@ A simple version of the 2048 game in Java, complete with a sophisticated UI.
 
 ## Current Status
 
-Currently, the project is undergoing development. The program only runs in the console for now, but a UI will be created shortly.
+Currently, the project is virtually complete. The program now has a fully functioning UI!
 
 ## How to Run
 
